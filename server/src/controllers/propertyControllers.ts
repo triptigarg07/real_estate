@@ -8,6 +8,8 @@ import axios from "axios";
 
 const prisma = new PrismaClient();
 
+
+
 const s3Client = new S3Client({
     region: process.env.AWS_REGION,
 })
@@ -143,7 +145,7 @@ export const getProperties = async(req: Request, res:Response): Promise<void> =>
         JOIN "Location" l ON p."locationId" = l.id
         ${
             whereConditions.length > 0
-            ? Prisma.sql`WHERE ${Prisma.join(whereConditions, "AND")}`
+            ? Prisma.sql`WHERE ${Prisma.join(whereConditions, " AND ")}`
             : Prisma.empty
         }
         `;
@@ -199,6 +201,8 @@ export const getProperty = async (
         .json({message: `Error retrieving property: ${err.message}`});
     }
 };
+
+
 
 export const createProperty = async (
     req: Request,
@@ -289,8 +293,7 @@ export const createProperty = async (
         res.status(201).json(newProperty);
 
     } catch (err: any) {
-        res
-        .status(500)
-        .json({message: `Error creating property: ${err.message}`});
-    }
+  console.error("CREATE PROPERTY ERROR:", err);
+  res.status(500).json({message: `Error creating property: ${err.message}`});
+}
 };

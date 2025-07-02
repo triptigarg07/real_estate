@@ -16,7 +16,7 @@ const prisma = new client_1.PrismaClient();
 const getManager = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { cognitoId } = req.params;
-        const manager = yield prisma.tenant.findUnique({
+        const manager = yield prisma.manager.findUnique({
             where: { cognitoId },
         });
         if (manager) {

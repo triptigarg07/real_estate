@@ -11,6 +11,6 @@ const storage = multer_1.default.memoryStorage();
 const upload = (0, multer_1.default)({ storage: storage });
 const router = express_1.default.Router();
 router.get("/", propertyControllers_1.getProperties);
-router.put("/:id", propertyControllers_1.getProperty);
+router.get("/:id", propertyControllers_1.getProperty);
 router.post("/", (0, authMiddleware_1.authMiddleware)(["manager"]), upload.array("photos"), propertyControllers_1.createProperty);
 exports.default = router;

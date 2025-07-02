@@ -101,12 +101,12 @@ export const CustomFormField: React.FC<FormFieldProps> = ({
             >
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>
-            <SelectContent className="w-full border-gray-200 shadow">
+            <SelectContent className="w-full bg-white dark:bg-gray-900 text-black dark:text-white border border-gray-200 dark:border-gray-700 shadow-md rounded-md z-50">
               {options?.map((option) => (
                 <SelectItem
                   key={option.value}
                   value={option.value}
-                  className={`cursor-pointer hover:!bg-gray-100 hover:!text-customgreys-darkGrey`}
+                  className="cursor-pointer hover:bg-gray-100 hover:dark:bg-gray-800"
                 >
                   {option.label}
                 </SelectItem>
@@ -114,6 +114,32 @@ export const CustomFormField: React.FC<FormFieldProps> = ({
             </SelectContent>
           </Select>
         );
+      case "select":
+        return (
+          <Select
+            value={field.value || (initialValue as string)}
+            defaultValue={field.value || (initialValue as string)}
+            onValueChange={field.onChange}
+          >
+            <SelectTrigger
+              className={`w-full border border-gray-200 p-4 ${inputClassName}`}
+            >
+              <SelectValue placeholder={placeholder} />
+            </SelectTrigger>
+            <SelectContent className="w-full bg-[#fcfcfc] text-[#222] border border-[#e5e5e5] shadow-md rounded-md z-50">
+              {options?.map((option) => (
+                <SelectItem
+                  key={option.value}
+                  value={option.value}
+                  className="cursor-pointer hover:bg-[#f0f0f0]"
+                >
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        );
+
       case "switch":
         return (
           <div className="flex items-center space-x-2">
@@ -121,13 +147,25 @@ export const CustomFormField: React.FC<FormFieldProps> = ({
               checked={field.value}
               onCheckedChange={field.onChange}
               id={name}
-              className={`text-customgreys-dirtyGrey ${inputClassName}`}
+              className={`
+    peer
+    inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent
+    transition-colors duration-200 ease-in-out
+    bg-gray-400 data-[state=checked]:bg-black
+    relative
+    after:content-[''] after:absolute after:left-0.5 after:top-0.5
+    after:h-4 after:w-4 after:rounded-full
+    after:bg-black data-[state=checked]:after:bg-white
+    after:transition-transform after:duration-200
+    data-[state=checked]:after:translate-x-5
+  `}
             />
             <FormLabel htmlFor={name} className={labelClassName}>
               {label}
             </FormLabel>
           </div>
         );
+
       case "file":
         return (
           <FilePond

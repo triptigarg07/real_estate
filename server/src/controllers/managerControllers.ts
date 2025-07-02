@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 export const getManager = async(req: Request, res:Response): Promise<void> => {
     try{
         const {cognitoId} = req.params;
-        const manager = await prisma.tenant.findUnique({
+        const manager = await prisma.manager.findUnique({
             where: {cognitoId},
         });
 

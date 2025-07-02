@@ -111,7 +111,7 @@ const getProperties = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         FROM "Property" p
         JOIN "Location" l ON p."locationId" = l.id
         ${whereConditions.length > 0
-            ? client_1.Prisma.sql `WHERE ${client_1.Prisma.join(whereConditions, "AND")}`
+            ? client_1.Prisma.sql `WHERE ${client_1.Prisma.join(whereConditions, " AND ")}`
             : client_1.Prisma.empty}
         `;
         const properties = yield prisma.$queryRaw(completeQuery);
@@ -205,9 +205,8 @@ const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.status(201).json(newProperty);
     }
     catch (err) {
-        res
-            .status(500)
-            .json({ message: `Error creating property: ${err.message}` });
+        console.error("CREATE PROPERTY ERROR:", err);
+        res.status(500).json({ message: `Error creating property: ${err.message}` });
     }
 });
 exports.createProperty = createProperty;

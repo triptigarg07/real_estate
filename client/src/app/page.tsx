@@ -1,37 +1,12 @@
 import Navbar from "@/components/Navbar";
-import { NAVBAR_HEIGHT } from "@/lib/constants";
+import Landing from "./(nondashboard)/landing/page";
 
 export default function Home() {
   return (
-    <div style={{ height: "100%", width: "100%" }}>
+    <div className="h-full w-full">
       <Navbar />
-      <main
-        style={{
-          height: "100%",
-          display: "flex",
-          width: "100%",
-          flexDirection: "column",
-          paddingTop: `${NAVBAR_HEIGHT}px`,
-        }}
-      >
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <h1
-            style={{
-              fontSize: "2.25rem",
-              fontWeight: "bold",
-              color: "#27272a",
-            }}
-          >
-            Welcome to RENTIFUL
-          </h1>
-        </div>
+      <main className={`h-full flex w-full flex-col`}>
+        <Landing />
       </main>
     </div>
   );

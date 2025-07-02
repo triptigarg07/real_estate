@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/components/Loading";
 import SettingsForm from "@/components/SettingsForm";
 import {
   useGetAuthUserQuery,
@@ -9,10 +10,10 @@ import React from "react";
 
 const ManagerSettings = () => {
   const { data: authUser, isLoading } = useGetAuthUserQuery();
-  console.log("authUser:", authUser);
+
   const [updateManager] = useUpdateManagerSettingsMutation();
 
-  if (isLoading) return <>Loading...</>;
+  if (isLoading) return <Loading />;
 
   const initialData = {
     name: authUser?.userInfo.name,
@@ -28,11 +29,15 @@ const ManagerSettings = () => {
   };
 
   return (
-    <SettingsForm
-      initialData={initialData}
-      onSubmit={handleSubmit}
-      userType="manager"
-    />
+    <div className="pt-16">
+      {" "}
+      {/* 16 * 4px = 64px */}
+      <SettingsForm
+        initialData={initialData}
+        onSubmit={handleSubmit}
+        userType="manager"
+      />
+    </div>
   );
 };
 
