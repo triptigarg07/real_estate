@@ -24,22 +24,22 @@ const itemVariants = {
 
 const DiscoverSection = () => {
   return (
-    <div className="py-12 bg-white mb-16">
-      <div className="max-w-6xl xl:max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
+    <div className="py-8 sm:py-12 bg-white mb-8 sm:mb-16">
+      <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={containerVariants}
         >
-          <motion.div variants={itemVariants} className="my-12 text-center">
-            <h2 className="text-3xl font-semibold leading-tight text-gray-800">
+          <motion.div variants={itemVariants} className="my-8 sm:my-12 text-center">
+            <h2 className="text-2xl sm:text-3xl font-semibold leading-tight text-gray-800">
               Discover
             </h2>
-            <p className="mt-4 text-lg text-gray-600">
+            <p className="mt-2 sm:mt-4 text-base sm:text-lg text-gray-600">
               Find your Dream Rental Property today!
             </p>
-            <p className="mt-2 text-lg text-gray-500 max-w-3xl mx-auto">
+            <p className="mt-1 sm:mt-2 text-base sm:text-lg text-gray-500 max-w-3xl mx-auto">
               Searching for your dream rental property has never been easier.
               With our user-friendly search feature, you can quickly find the
               perfect home that meets all your needs. Start your search today
@@ -47,7 +47,7 @@ const DiscoverSection = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 xl:gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-12 xl:gap-16">
             {[
               {
                 imageSrc: "/landing-icon-wand.png",
