@@ -116,7 +116,7 @@ A comprehensive real estate management platform built with Next.js, Node.js, and
 
 The application will be available at:
 - Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
+- Backend API: http://localhost:3001
 
 ## 📁 Project Structure
 
@@ -179,28 +179,21 @@ Real_estate_Enterprise/
 
 ## 🚀 Deployment
 
-This project is deployed on **Vercel** for optimal performance and scalability.
+- This project is deployed on **Vercel** for optimal performance and scalability.
 
-### Frontend Deployment (Vercel)
-The Next.js frontend is automatically deployed on Vercel:
-
-1. **Connect Repository**: Link your GitHub repository to Vercel
-2. **Configure Build Settings**:
-   - Build Command: `npm run build`
-   - Output Directory: `.next`
-   - Install Command: `npm install`
-3. **Environment Variables**: Add your environment variables in Vercel dashboard:
-   ```
-   NEXT_PUBLIC_API_URL=https://your-backend-url.com
-   NEXT_PUBLIC_MAPBOX_TOKEN=your-mapbox-token
-   ```
+### Frontend Deployment
+```bash
+cd client
+npm run build
+npm start
+```
 
 ### Backend Deployment
-For the backend, you can deploy to:
-- **Vercel Functions** (recommended for full-stack)
-- **Railway**
-- **Heroku**
-- **DigitalOcean App Platform**
+```bash
+cd server
+npm run build
+npm start
+```
 
 ### Database Migration
 ```bash
@@ -208,46 +201,8 @@ cd server
 npx prisma migrate deploy
 ```
 
-### Vercel Configuration
-Create a `vercel.json` file in the root directory for full-stack deployment:
 
-```json
-{
-  "version": 2,
-  "builds": [
-    {
-      "src": "client/package.json",
-      "use": "@vercel/next"
-    },
-    {
-      "src": "server/src/index.ts",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "server/src/index.ts"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "client/$1"
-    }
-  ]
-}
-```
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
@@ -257,10 +212,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Radix UI](https://www.radix-ui.com/) for accessible component primitives
 - [Mapbox](https://www.mapbox.com/) for mapping services
 
-## 📞 Support
 
-For support and questions, please open an issue in the GitHub repository or contact the development team.
 
----
-
-**Built with ❤️ using modern web technologies** 
+**Built with ❤️ using modern web technologies**
