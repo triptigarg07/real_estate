@@ -20,9 +20,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { SidebarTrigger } from "./ui/sidebar";
 
 const Navbar = () => {
-  const { data: authUser } = useGetAuthUserQuery();
+  const { data: authUser, isLoading: authLoading, error: authError } = useGetAuthUserQuery();
   const router = useRouter();
   const pathname = usePathname();
+
+
 
   const isDashboardPage =
     pathname.includes("/managers") || pathname.includes("/tenants");
@@ -39,7 +41,7 @@ const Navbar = () => {
         height: `${NAVBAR_HEIGHT}px`,
       }}
     >
-      <div className="flex justify-between items-center w-full py-3 px-8 bg-black/85 text-white">
+      <div className="flex justify-between items-center w-full py-3 px-4 sm:px-6 md:px-8 bg-black/85 text-white">
         <div className="flex items-center gap-4 md:gap-6">
           {isDashboardPage && (
             <div className="md:hidden">
@@ -55,7 +57,7 @@ const Navbar = () => {
                 height={24}
                 className="w-6 h-6"
               />
-              <div className="text-xl font-bold">
+              <div className="text-lg sm:text-xl font-bold">
                 RENT
                 <span className="text-amber-500 font-light">IFUL</span>
               </div>
@@ -94,8 +96,10 @@ const Navbar = () => {
             Discover your perfect rental apartment with our advanced search
           </p>
         )}
-        <div className="flex items-center gap-5">
-          {authUser ? (
+        <div className="flex items-center gap-2 sm:gap-3 md:gap-5">
+          {authLoading ? (
+            <div className="text-white">Loading...</div>
+          ) : authUser ? (
             <>
               <div className="relative hidden md:block">
                 <MessageCircle className="w-6 h-6 cursor-pointer text-white hover:text-gray" />
@@ -155,17 +159,19 @@ const Navbar = () => {
               <Link href="/signin">
                 <Button
                   variant="outline"
-                  className="text-white border-white bg-transparent hover:bg-white hover:text-blue-700 rounded-lg"
+                  className="text-white border-white bg-transparent hover:bg-white hover:text-blue-700 rounded-lg text-sm sm:text-base px-2 sm:px-4"
                 >
-                  Sign In
+                  <span className="hidden sm:inline">Sign In</span>
+                  <span className="sm:hidden">Sign In</span>
                 </Button>
               </Link>
               <Link href="/signup">
                 <Button
                   variant="secondary"
-                  className="text-white border-white bg-red-400 hover:bg-white hover:text-blue-700 rounded-lg"
+                  className="text-white border-white bg-red-400 hover:bg-white hover:text-blue-700 rounded-lg text-sm sm:text-base px-2 sm:px-4"
                 >
-                  Sign Up
+                  <span className="hidden sm:inline">Sign Up</span>
+                  <span className="sm:hidden">Sign Up</span>
                 </Button>
               </Link>
             </>

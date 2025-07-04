@@ -96,8 +96,8 @@ const FiltersBar = () => {
   };
 
   return (
-    <div className="flex justify-between items-center w-full py-5">
-      <div className="flex justify-between items-center gap-4 p-2">
+    <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center w-full py-5 gap-4">
+      <div className="flex flex-wrap justify-start items-center gap-2 sm:gap-4 p-2 w-full lg:w-auto">
         <Button
           variant="outline"
           className={cn(
@@ -114,23 +114,23 @@ const FiltersBar = () => {
             placeholder="Search location"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className="w-40 rounded-l-xl rounded-r-none border-gray-400 border-r-0"
+            className="w-32 sm:w-40 rounded-l-xl rounded-r-none border-gray-400 border-r-0"
           />
           <Button
             onClick={handleLocationSearch}
-            className="rounded-r-xl rounded-l-none border-l-none border-gray-400 shadow-none border  hover:bg-black hover:text-white "
+            className="rounded-r-xl rounded-l-none border-l-none border-gray-400 shadow-none border hover:bg-black hover:text-white"
           >
             <Search className="w-4 h-4" />
           </Button>
         </div>
-        <div className="flex gap-1">
+        <div className="flex gap-1 flex-wrap">
           <Select
             value={filters.priceRange[0]?.toString() || "any"}
             onValueChange={(value) =>
               handleFilterChange("priceRange", value, true)
             }
           >
-            <SelectTrigger className="min-w-[8rem] rounded-xl border-gray-400">
+            <SelectTrigger className="min-w-[6rem] sm:min-w-[8rem] rounded-xl border-gray-400">
               <SelectValue>
                 {formatPriceValue(filters.priceRange[0], true)}
               </SelectValue>
@@ -160,7 +160,7 @@ const FiltersBar = () => {
               handleFilterChange("priceRange", value, false)
             }
           >
-            <SelectTrigger className="min-w-[8rem] rounded-xl border-gray-400">
+            <SelectTrigger className="min-w-[6rem] sm:min-w-[8rem] rounded-xl border-gray-400">
               <SelectValue>
                 {formatPriceValue(filters.priceRange[1], false)}
               </SelectValue>
@@ -185,12 +185,12 @@ const FiltersBar = () => {
           </Select>
         </div>
 
-        <div className="flex gap-1">
+        <div className="flex gap-1 flex-wrap">
           <Select
             value={filters.beds}
             onValueChange={(value) => handleFilterChange("beds", value, null)}
           >
-            <SelectTrigger className="min-w-[8rem] rounded-xl border-gray-400">
+            <SelectTrigger className="min-w-[6rem] sm:min-w-[8rem] rounded-xl border-gray-400">
               <SelectValue placeholder="Beds" />
             </SelectTrigger>
             <SelectContent className="bg-white">
@@ -231,7 +231,7 @@ const FiltersBar = () => {
             value={filters.baths}
             onValueChange={(value) => handleFilterChange("baths", value, null)}
           >
-            <SelectTrigger className="min-w-[8rem] rounded-xl border-gray-400">
+            <SelectTrigger className="min-w-[6rem] sm:min-w-[8rem] rounded-xl border-gray-400">
               <SelectValue placeholder="Baths" />
             </SelectTrigger>
             <SelectContent className="bg-white">
@@ -268,7 +268,7 @@ const FiltersBar = () => {
             handleFilterChange("propertyType", value, null)
           }
         >
-          <SelectTrigger className="min-w-[8rem] rounded-xl border-gray-400">
+          <SelectTrigger className="min-w-[6rem] sm:min-w-[8rem] rounded-xl border-gray-400">
             <SelectValue placeholder="Home Type" />
           </SelectTrigger>
           <SelectContent className="bg-white">
@@ -284,7 +284,7 @@ const FiltersBar = () => {
           </SelectContent>
         </Select>
       </div>
-      <div className="flex justify-between items-center gap-4 p-2">
+      <div className="flex justify-center lg:justify-between items-center gap-4 p-2 w-full lg:w-auto">
         <div className="flex border rounded-xl">
           <Button
             variant="ghost"

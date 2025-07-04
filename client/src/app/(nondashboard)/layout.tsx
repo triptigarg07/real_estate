@@ -17,15 +17,16 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     if (authUser) {
       const userRole = authUser.userRole?.toLowerCase();
       if (
-        (userRole === "manager" && pathname.startsWith("/search")) ||
-        (userRole === "manager" && pathname.startsWith("/"))
+        (userRole === "manager" && pathname.startsWith("/search"))
       ) {
         router.push("/managers/properties", { scroll: false });
       } else {
         setIsLoading(false);
       }
+    } else if (!authLoading) {
+      setIsLoading(false);
     }
-  }, [authUser, router, pathname]);
+  }, [authUser, authLoading, router, pathname]);
 
   if (authLoading || isLoading) return <Loading />;
 

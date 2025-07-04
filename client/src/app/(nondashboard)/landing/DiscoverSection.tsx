@@ -32,14 +32,14 @@ const DiscoverSection = () => {
           viewport={{ once: true, amount: 0.3 }}
           variants={containerVariants}
         >
-          <motion.div variants={itemVariants} className="my-12 text-center">
-            <h2 className="text-3xl font-semibold leading-tight text-gray-800">
+          <motion.div variants={itemVariants} className="my-8 sm:my-12 text-center">
+            <h2 className="text-2xl sm:text-3xl font-semibold leading-tight text-gray-800">
               Discover
             </h2>
-            <p className="mt-4 text-lg text-gray-600">
+            <p className="mt-4 text-base sm:text-lg text-gray-600">
               Find your Dream Rental Property today!
             </p>
-            <p className="mt-2 text-lg text-gray-500 max-w-3xl mx-auto">
+            <p className="mt-2 text-sm sm:text-lg text-gray-500 max-w-3xl mx-auto">
               Searching for your dream rental property has never been easier.
               With our user-friendly search feature, you can quickly find the
               perfect home that meets all your needs. Start your search today
@@ -88,7 +88,7 @@ const DiscoverCard = ({
   title: string;
   description: string;
 }) => (
-  <div className="px-4 py-12 shadow-lg rounded-lg bg-white md:h-72 text-center">
+  <div className="px-4 py-8 sm:py-12 shadow-lg rounded-lg bg-white md:h-72 text-center">
     <div className="bg-black p-[0.6rem] rounded-full mb-4 h-10 w-10 mx-auto">
       <Image
         src={imageSrc}
@@ -98,8 +98,8 @@ const DiscoverCard = ({
         alt={title}
       />
     </div>
-    <h3 className="mt-4 text-xl font-medium text-gray-800">{title}</h3>
-    <p className="mt-2 text-base text-gray-500">{description}</p>
+    <h3 className="mt-4 text-lg sm:text-xl font-medium text-gray-800">{title}</h3>
+    <p className="mt-2 text-sm sm:text-base text-gray-500">{description}</p>
   </div>
 );
 
