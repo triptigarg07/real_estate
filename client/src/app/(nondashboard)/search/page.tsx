@@ -25,17 +25,21 @@ const SearchPage = () => {
           acc[key] = value.split(",").map((v) => (v === "" ? null : Number(v)));
         } else if (key === "coordinates") {
           acc[key] = value.split(",").map(Number);
+        } else if (key === "amenities") {
+          acc[key] = value ? value.split(",") : [];
         } else {
-          acc[key] = value === "any" ? null : value;
+          acc[key] = value === "any" || value === "" ? "any" : value;
         }
         return acc;
       },
       {}
     );
 
-    const cleanedFilters = cleanParams(initialFilters);
-    dispatch(setFilters(cleanedFilters));
-  }, []);
+    if (Object.keys(initialFilters).length > 0) {
+      const cleanedFilters = cleanParams(initialFilters);
+      dispatch(setFilters(cleanedFilters));
+    }
+  }, [searchParams, dispatch]);
   return (
     <div
       className="w-full mx-auto px-2 sm:px-5 flex flex-col"

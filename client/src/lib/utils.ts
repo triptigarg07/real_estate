@@ -29,6 +29,7 @@ export function cleanParams(params: Record<string, unknown>): Record<string, unk
         value !== undefined &&
         value !== "any" &&
         value !== "" &&
+        !(Array.isArray(value) && value.length === 0) &&
         (Array.isArray(value) ? value.some((v) => v !== null) : value !== null)
     )
   );
