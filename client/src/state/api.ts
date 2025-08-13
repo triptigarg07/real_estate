@@ -129,6 +129,8 @@ export const api = createApi({
         latitude: filters.coordinates?.[1],
         longitude: filters.coordinates?.[0],
       });
+      // Add this log:
+  console.log("Sending property filter params to API:", params);
 
      
       return {url: "properties", params};

@@ -13,7 +13,10 @@ const upload = multer({storage: storage});
 
 const router = express.Router();
 
-router.get("/", getProperties);
+router.get("/", (req, res, next) => {
+    console.log("GET /properties route hit");
+    next();
+}, getProperties);
 router.get("/:id", getProperty);
 router.post("/",
     authMiddleware(["manager"]),
