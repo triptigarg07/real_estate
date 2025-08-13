@@ -54,7 +54,7 @@ export const getProperties = async(req: Request, res:Response): Promise<void> =>
 
         if (beds && beds !== "any") {
             whereConditions.push(
-                Prisma.sql`p.beds <= ${Number(beds)}`
+                Prisma.sql`p.beds >= ${Number(beds)}`
             );
         }
 
@@ -76,12 +76,6 @@ export const getProperties = async(req: Request, res:Response): Promise<void> =>
             );
         }
 
-        if (squareFeetMax) {
-            whereConditions.push(
-                Prisma.sql`p."squareFeet" <= ${Number(squareFeetMax)}`
-            );
-        }
-
         if (propertyType && propertyType !== "any") {
             whereConditions.push(
                 Prisma.sql`p."propertyType" = ${propertyType} :: "PropertyType"`
@@ -91,7 +85,7 @@ export const getProperties = async(req: Request, res:Response): Promise<void> =>
         if (amenities && amenities !== "any") {
             const amenitiesArray = (amenities as string).split(",")
             whereConditions.push(
-                Prisma.sql`p.amenities @> ${amenitiesArray}`
+                Prisma.sql`p.amenities && ${amenitiesArray}::text[]`
             );
         }
 
@@ -101,10 +95,10 @@ export const getProperties = async(req: Request, res:Response): Promise<void> =>
                 const date = new Date(availableFromDate);
                 if(!isNaN(date.getTime())) {
                     whereConditions.push(
-                        Prisma.sql`EXISTS (
-                            SELECT 1 FROM "Lease" l
-                            WHERE l."propertyId" = p.id
-                            AND l."startDate" <= ${date.toISOString()}
+                        Prisma.sql`NOT EXISTS (
+                            SELECT 1 FROM "Lease" lease
+                            WHERE lease."propertyId" = p.id
+                            AND lease."endDate" > ${date.toISOString()}
                         )`
                     );
                 }
@@ -114,14 +108,13 @@ export const getProperties = async(req: Request, res:Response): Promise<void> =>
         if (latitude && longitude) {
             const lat = parseFloat(latitude as string);
             const lng = parseFloat(longitude as string);
-            const radiusInKilometers = 1000;
-            const degrees = radiusInKilometers / 111;
+            const radiusInMeters = 50000; // 50km radius
 
             whereConditions.push(
                 Prisma.sql`ST_DWithin(
-                    l.coordinates :: geometry,
+                    l.coordinates,
                     ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326),
-                    ${degrees}
+                    ${radiusInMeters}
                 )`
             );
         }
@@ -148,6 +141,7 @@ export const getProperties = async(req: Request, res:Response): Promise<void> =>
             ? Prisma.sql`WHERE ${Prisma.join(whereConditions, " AND ")}`
             : Prisma.empty
         }
+        ORDER BY p."postedDate" DESC
         `;
 
         const properties = await prisma.$queryRaw(completeQuery);

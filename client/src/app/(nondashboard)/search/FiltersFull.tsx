@@ -68,9 +68,12 @@ const FiltersFull = () => {
 
   const handleLocationSearch = async () => {
     try {
+      const trimmedQuery = localFilters.location.trim();
+      if (!trimmedQuery) return;
+
       const response = await fetch(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-          localFilters.location
+          trimmedQuery
         )}.json?access_token=${
           process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
         }&fuzzyMatch=true`
@@ -80,6 +83,7 @@ const FiltersFull = () => {
         const [lng, lat] = data.features[0].center;
         setLocalFilters((prev) => ({
           ...prev,
+          location: trimmedQuery,
           coordinates: [lng, lat],
         }));
       }
@@ -98,14 +102,14 @@ const FiltersFull = () => {
           <div className="flex items-center">
             <Input
               placeholder="Enter location"
-              value={filters.location}
+              value={localFilters.location}
               onChange={(e) =>
                 setLocalFilters((prev) => ({
                   ...prev,
                   location: e.target.value,
                 }))
               }
-              className="roundec-l-xl rounded-r-none border-r-0"
+              className="rounded-l-xl rounded-r-none border-r-0"
             />
             <Button
               onClick={handleLocationSearch}
@@ -118,6 +122,22 @@ const FiltersFull = () => {
         <div>
           <h4 className="font-bold mb-2">Property Type</h4>
           <div className="grid grid-cols-2 gap-4">
+            <div
+              className={cn(
+                "flex flex-col items-center justify-center p-4 border rounded-xl cursor-pointer",
+                localFilters.propertyType === "any" || !localFilters.propertyType
+                  ? "border-black"
+                  : "border-gray-200"
+              )}
+              onClick={() =>
+                setLocalFilters((prev) => ({
+                  ...prev,
+                  propertyType: "any",
+                }))
+              }
+            >
+              <span>Any Type</span>
+            </div>
             {Object.entries(PropertyTypeIcons).map(([type, Icon]) => (
               <div
                 key={type}
@@ -141,7 +161,7 @@ const FiltersFull = () => {
           </div>
         </div>
         <div>
-          <h4 className="fontt-bold mb-2">Price Range (Monthly)</h4>
+          <h4 className="font-bold mb-2">Price Range (Monthly)</h4>
           <Slider
             min={0}
             max={10000}
@@ -216,7 +236,7 @@ const FiltersFull = () => {
             onValueChange={(value) =>
               setLocalFilters((prev) => ({
                 ...prev,
-                priceRange: value as [number, number],
+                squareFeet: value as [number, number],
               }))
             }
             className="[&>.bar]:bg-black"

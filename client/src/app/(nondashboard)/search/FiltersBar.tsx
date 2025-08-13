@@ -73,9 +73,12 @@ const FiltersBar = () => {
 
   const handleLocationSearch = async () => {
     try {
+      const trimmedQuery = searchInput.trim();
+      if (!trimmedQuery) return;
+
       const response = await fetch(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-          searchInput
+          trimmedQuery
         )}.json?access_token=${
           process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
         }&fuzzyMatch=true`
@@ -85,10 +88,13 @@ const FiltersBar = () => {
         const [lng, lat] = data.features[0].center;
         dispatch(
           setFilters({
-            location: searchInput,
+            location: trimmedQuery,
             coordinates: [lng, lat],
           })
         );
+        
+        const newFilters = { ...filters, location: trimmedQuery, coordinates: [lng, lat] };
+        updateURL(newFilters);
       }
     } catch (err) {
       console.error("Error searching location:", err);
@@ -272,9 +278,18 @@ const FiltersBar = () => {
             <SelectValue placeholder="Home Type" />
           </SelectTrigger>
           <SelectContent className="bg-white">
-            <SelectItem value="any">Any Property Type</SelectItem>
+            <SelectItem 
+              value="any"
+              className="hover:bg-gray-100 hover:text-black cursor-pointer"
+            >
+              Any Property Type
+            </SelectItem>
             {Object.entries(PropertyTypeIcons).map(([type, Icon]) => (
-              <SelectItem key={type} value={type}>
+              <SelectItem 
+                key={type} 
+                value={type}
+                className="hover:bg-gray-100 hover:text-black cursor-pointer"
+              >
                 <div className="flex items-center">
                   <Icon className="w-4 h-4 mr-2" />
                   <span>{type}</span>
