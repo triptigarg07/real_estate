@@ -27,7 +27,7 @@ const FiltersBar = () => {
   );
 
   const viewMode = useAppSelector((state) => state.global.viewMode);
-  const [searchInput, setSearchInput] = useState(filters.location);
+  const [searchInput, setSearchInput] = useState(filters.location || "Los Angeles, CA");
 
   const updateURL = debounce((newFilters) => {
     const cleanFilters = cleanParams(newFilters) as Record<

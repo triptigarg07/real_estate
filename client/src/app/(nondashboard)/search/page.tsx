@@ -2,24 +2,25 @@
 
 import { NAVBAR_HEIGHT } from "@/lib/constants";
 import { useAppDispatch, useAppSelector } from "@/state/redux";
+import { initialState, setFilters } from "@/state";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import FiltersBar from "./FiltersBar";
 import FiltersFull from "./FiltersFull";
 import { cleanParams } from "@/lib/utils";
-import { setFilters } from "@/state";
 import Map from "./Map";
 import Listings from "./Listings";
 
 const SearchPage = () => {
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
+  const filters = useAppSelector((state) => state.global.filters);
   const isFiltersFullOpen = useAppSelector(
     (state) => state.global.isFiltersFullOpen
   );
 
   useEffect(() => {
-    const initialFilters = Array.from(searchParams.entries()).reduce(
+    const urlFilters = Array.from(searchParams.entries()).reduce(
       (acc: any, [key, value]) => {
         if (key === "priceRange" || key === "squareFeet") {
           acc[key] = value.split(",").map((v) => (v === "" ? null : Number(v)));
@@ -35,9 +36,12 @@ const SearchPage = () => {
       {}
     );
 
-    if (Object.keys(initialFilters).length > 0) {
-      const cleanedFilters = cleanParams(initialFilters);
+    if (Object.keys(urlFilters).length > 0) {
+      const cleanedFilters = cleanParams(urlFilters);
       dispatch(setFilters(cleanedFilters));
+    } else if (filters.location === "" || (filters.coordinates[0] === 0 && filters.coordinates[1] === 0)) {
+      // Set default Los Angeles location if no URL params and no location set
+      dispatch(setFilters(initialState.filters));
     }
   }, [searchParams, dispatch]);
   return (
